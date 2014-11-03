@@ -26,9 +26,15 @@
  * @license GPL v3
  */
 
-// Module metadata
-$string['pluginname'] = 'DevKit';
+namespace local_devkit\exception;
 
-// Exceptions
-$string['error:plugindoesnotexist']        = 'No plugin matching the string \'{$a}\' could be found';
-$string['error:pluginuninstallnotallowed'] = 'The plugin manager reported that it could not uninstall \'{$a}\'';
+use moodle_exception;
+
+defined('MOODLE_INTERNAL') || die;
+
+class plugin_does_not_exist extends moodle_exception {
+    public function __construct($component) {
+        parent::__construct('error:plugindoesnotexist', 'local_devkit',
+                            null, $component);
+    }
+}

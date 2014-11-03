@@ -26,9 +26,36 @@
  * @license GPL v3
  */
 
-// Module metadata
-$string['pluginname'] = 'DevKit';
+use local_devkit\helper\plugin_helper;
 
-// Exceptions
-$string['error:plugindoesnotexist']        = 'No plugin matching the string \'{$a}\' could be found';
-$string['error:pluginuninstallnotallowed'] = 'The plugin manager reported that it could not uninstall \'{$a}\'';
+define('CLI_SCRIPT', true);
+
+require_once dirname(dirname(dirname(__DIR__))) . '/config.php';
+require_once "{$CFG->libdir}/adminlib.php";
+require_once "{$CFG->libdir}/clilib.php";
+
+list($options, $unrecognized) = cli_get_params(
+    array(
+        'action' => null,
+        'component' => null,
+    ),
+    array(
+        'a' => 'action',
+        'c' => 'component',
+    )
+);
+
+$helper   = new plugin_helper(core_plugin_manager::instance());
+$progress = new progress_trace_buffer(new text_progress_trace(), false);
+
+switch ($options['action']) {
+    case 'uninstall':
+        $helper->uninstall($options['component'], $progress);
+        break;
+
+    default:
+        echo $helper->help();
+}
+
+$progress->finished();
+echo $progress->get_buffer();
