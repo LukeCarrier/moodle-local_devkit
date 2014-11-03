@@ -53,6 +53,10 @@ switch ($options['action']) {
         $helper->uninstall($options['component'], $progress);
         break;
 
+    case 'upgrade':
+        $helper->upgrade($progress);
+        break;
+
     default:
         echo $helper->help();
 }

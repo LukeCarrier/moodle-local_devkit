@@ -30,6 +30,7 @@ namespace local_devkit\helper;
 
 use local_devkit\exception\plugin_does_not_exist;
 use local_devkit\exception\plugin_uninstall_not_allowed;
+use local_devkit\util\shell_util;
 use progress_trace_buffer;
 use text_progress_trace;
 
@@ -73,8 +74,8 @@ installation.
 
 Switches:
     --action (-a)       One of the following:
-                            install
-                            upgrade
+                            install - install a specific --component
+                            upgrade - upgrade all components
     --component (-c)    The frankenstyle component name, e.g.:
                             local_devkit
                             mod_mymod
@@ -103,6 +104,24 @@ EOF;
 
         $this->pluginmgr->uninstall_plugin($info->component, $progress);
 
+        return $progress;
+    }
+
+    /**
+     * Upgrade all plugins.
+     *
+     *
+     */
+    public function upgrade($progress) {
+        global $CFG;
+
+        $output = shell_util::shell_exec_args(shell_util::get_php_binary(), array(
+            "{$CFG->dirroot}/admin/cli/upgrade.php",
+            '--allow-unstable',
+            '--non-interactive',
+        ));
+
+        $progress->output($output);
         return $progress;
     }
 }
