@@ -46,12 +46,14 @@ if (!defined('LOCAL_DEVKIT_SETUPLIB')) {
      * arbitrary commit instead of a branch), we have no way of determining the
      * correct branch, and fall back to using "master".
      *
+     * @param string $directory Moodle's dirroot directory. We prompt for it as
+     *                          a parameter because we can't yet depend on it
+     *                          being configured!
+     *
      * @return string Either a (two digit) number extracted from a
      *                MOODLE_xx_STABLE branch name, or "master".
      */
     function local_devkit_moodle_series($directory) {
-        global $CFG;
-
         $headcontents = file_get_contents("{$directory}/.git/HEAD");
 
         preg_match('/MOODLE_([0-9]+)_STABLE$/', $headcontents, $seriesmatches);
