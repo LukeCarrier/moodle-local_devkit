@@ -16,14 +16,21 @@
 // along with Moodle. If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Moodle/Totara LMS CPD plugin.
+ * Moodle/Totara LMS DevKit plugin.
  *
- * A modern replacement for the legacy report_cpd module, which has numerous
- * security issues. Supports the existing tables without any fuss.
+ * A suite of developer tools that aim to smooth over some of the cracks in
+ * Moodle. This plugin should absolutely not be installed on production sites.
  *
- * @author Luke Carrier <luke@carrier.im> <luke@tdm.co>
- * @copyright 2014 Luke Carrier, The Development Manager Ltd
+ * @author Luke Carrier <luke@carrier.im>
+ * @copyright 2014 Luke Carrier
  * @license GPL v3
  */
 
+// Release information
 $plugin->component = 'local_devkit';
+$plugin->release   = '0.1.0';
+$plugin->maturity  = MATURITY_ALPHA;
+
+// Version format:  YYYYMMDDXX
+$plugin->version  = 2014110300;
+$plugin->requires = 2013111800;
