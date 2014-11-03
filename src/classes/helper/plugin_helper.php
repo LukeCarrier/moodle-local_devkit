@@ -66,7 +66,6 @@ class plugin_helper {
      */
     public function help() {
         return <<<EOF
-
 Plugin manager.
 
 CLI tool for rapidly managing plugins installed within your local Moodle
@@ -75,7 +74,8 @@ installation.
 Switches:
     --action (-a)       One of the following:
                             install
-    --component (-c)    The component name, e.g.:
+                            upgrade
+    --component (-c)    The frankenstyle component name, e.g.:
                             local_devkit
                             mod_mymod
 
@@ -88,7 +88,7 @@ EOF;
      * @param string          $component The name of the component to install.
      * @param \progress_trace $progress  Progress trace to direct output to.
      *
-     * @return string The output from the uninstallation process.
+     * @return \progress_trace The output from the uninstallation process.
      */
     public function uninstall($component, $progress) {
         $info = $this->pluginmgr->get_plugin_info($component);
