@@ -31,8 +31,7 @@ Features
 
 * A configuration assistance library
     * Per git branch configuration of development sites
-    * Automatic configuration of wwwroot based upon
-      ```$_SERVER['SERVER_ADDR']```
+    * Automatic configuration of wwwroot based upon ```$_SERVER['SERVER_ADDR']```
 * Shortcuts for plugin installation and configuration
 
 Building
