@@ -110,7 +110,11 @@ EOF;
     /**
      * Upgrade all plugins.
      *
+     * Run the Moodle upgrade process.
      *
+     * @param \progress_trace $progress Progress trace to direct output to.
+     *
+     * @return \progress_trace The output from the installation process.
      */
     public function upgrade($progress) {
         global $CFG;
