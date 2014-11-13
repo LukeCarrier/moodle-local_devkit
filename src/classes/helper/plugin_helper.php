@@ -41,6 +41,16 @@ defined('MOODLE_INTERNAL') || die;
  *
  * Most of the logic within this class has been based heavily upon that found in
  * /admin/plugins.php.
+ *
+ * Extensive changes have been made to the plugin installation process:
+ *  -> A great deal of sanity checking has been removed. It is assumed that
+ *     plugins can already be installed by running the command line or Site
+ *     Administration upgrader. This code may return in the near future
+ *     following some refactoring.
+ *  -> We don't do a complete upgrade of all plugins when performing an
+ *     installation of a single plugin unless explicitly asked to peforma a
+ *     complete upgrade. This saves on upgrade time and may allow plugins to be
+ *     be installed despite others breaking the upgrade process.
  */
 class plugin_helper {
     /**
@@ -74,13 +84,77 @@ installation.
 
 Switches:
     --action (-a)       One of the following:
-                            install - install a specific --component
-                            upgrade - upgrade all components
+                            install   - install a specific --component
+                            uninstall - uninstall a specific --component
+                            upgrade   - upgrade all components
     --component (-c)    The frankenstyle component name, e.g.:
                             local_devkit
                             mod_mymod
 
 EOF;
+    }
+
+    /**
+     * Install a plugin of any type.
+     *
+     * This method merely routes the component's installation to the most
+     * appropriate installation method. Blocks and activity modules require
+     * specialised installation routines. All other plugin types can be
+     * installed by a more generic installation process.
+     *
+     * @param string          $component The name of the component to install.
+     * @param \progress_trace $progress  Progress trace to direct output to.
+     *
+     * @return void
+     */
+    public function install($component, $progress) {
+        global $CFG, $DB;
+
+        list($type, $name) = core_component::normalize_component($component);
+
+        switch ($type) {
+            case 'block': return $this->install_block($name);
+            case 'mod':   return $this->install_module($name);
+            default:      return $this->install_generic($type, $name);
+        }
+    }
+
+    /**
+     * Install a plugin using the generic routine.
+     *
+     * @param string $type The type of the component to install.
+     * @param string $name The name of the component to install.
+     *
+     */
+    public function install_generic($type, $name) {
+        $pluginmgr = core_plugin_manager::instance();
+
+        $plugininfo = $pluginmgr->get_plugin_info("{$type}_{$name}");
+        $version    = $this->get_plugin_version($plugininfo);
+
+    }
+
+    /**
+     * Get plugin version information from version.php.
+     *
+     * It's best to do this sort of thing in a sandbox where we're least likely
+     * to lose important state.
+     *
+     * @param \core\plugininfo\base $plugininfo Plugin information.
+     *
+     * @return \stdClass An object containing data sourced from the version
+     *                   file.
+     */
+    protected function get_plugin_version($plugininfo) {
+        $plugin = (object) array(
+            'version' => null,
+        );
+        require $file;
+
+        $plugin->name     = $plugininfo->name;
+        $plugin->fullname = "{$plugininfo->type}_{$plugininfo->name}";
+
+        return $plugin;
     }
 
     /**
