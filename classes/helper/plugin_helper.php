@@ -28,11 +28,10 @@
 
 namespace local_devkit\helper;
 
+use core_component;
 use local_devkit\exception\plugin_does_not_exist;
 use local_devkit\exception\plugin_uninstall_not_allowed;
 use local_devkit\util\shell_util;
-use progress_trace_buffer;
-use text_progress_trace;
 
 defined('MOODLE_INTERNAL') || die;
 
@@ -128,9 +127,7 @@ EOF;
      *
      */
     public function install_generic($type, $name) {
-        $pluginmgr = core_plugin_manager::instance();
-
-        $plugininfo = $pluginmgr->get_plugin_info("{$type}_{$name}");
+        $plugininfo = $this->pluginmgr->get_plugin_info("{$type}_{$name}");
         $version    = $this->get_plugin_version($plugininfo);
 
     }
