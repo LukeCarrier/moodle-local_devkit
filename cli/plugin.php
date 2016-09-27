@@ -27,6 +27,7 @@
  */
 
 use local_devkit\helper\plugin_helper;
+use local_devkit\plugin_manager;
 
 define('CLI_SCRIPT', true);
 
@@ -36,16 +37,22 @@ require_once "{$CFG->libdir}/clilib.php";
 
 list($options, $unrecognized) = cli_get_params(
     array(
-        'action' => null,
+        'action'    => null,
         'component' => null,
+        'force'     => null,
     ),
     array(
         'a' => 'action',
         'c' => 'component',
+        'f' => 'force',
     )
 );
 
-$helper   = new plugin_helper(core_plugin_manager::instance());
+/** @var \local_devkit\plugin_manager $pluginmgr */
+$pluginmgr = plugin_manager::instance();
+$pluginmgr->devkit_use_force($options['force']);
+
+$helper   = new plugin_helper($pluginmgr);
 $progress = new progress_trace_buffer(new text_progress_trace(), false);
 
 switch ($options['action']) {
