@@ -50,7 +50,7 @@ $progress = new progress_trace_buffer(new text_progress_trace(), false);
 
 switch ($options['action']) {
     case 'install':
-        $helper->install($options['component']);
+        $helper->install($options['component'], $progress);
         break;
 
     case 'uninstall':
