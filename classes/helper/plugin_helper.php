@@ -86,6 +86,7 @@ Switches:
     --action (-a)       One of the following:
                             install   - install a specific --component
                             uninstall - uninstall a specific --component
+                            reinstall - both uninstall and install --component
                             upgrade   - upgrade all components
     --component (-c)    The frankenstyle component name, e.g.:
                             local_devkit

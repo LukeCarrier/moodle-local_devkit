@@ -57,6 +57,11 @@ switch ($options['action']) {
         $helper->uninstall($options['component'], $progress);
         break;
 
+    case 'reinstall':
+        $helper->uninstall($options['component'], $progress);
+        $helper->install($options['component'], $progress);
+        break;
+
     case 'upgrade':
         $helper->upgrade($progress);
         break;
