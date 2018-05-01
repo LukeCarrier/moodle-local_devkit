@@ -26,20 +26,29 @@
  * @license GPL v3
  */
 
-// Module metadata
-$string['pluginname'] = 'DevKit';
+defined('MOODLE_INTERNAL') || die;
 
-// Exceptions
-$string['error:plugindoesnotexist']        = 'No plugin matching the string \'{$a}\' could be found';
-$string['error:pluginuninstallnotallowed'] = 'The plugin manager reported that it could not uninstall \'{$a}\'';
-
-// String manager
-$string['strings:code']         = 'Code';
-$string['strings:country']      = 'Country';
-$string['strings:countries']    = 'Countries';
-$string['strings:currency']     = 'Currency';
-$string['strings:currencies']   = 'Currencies';
-$string['strings:language']     = 'Language';
-$string['strings:languages']    = 'Languages';
-$string['strings:translation']  = 'Translation';
-$string['strings:translations'] = 'Translations';
+/**
+ * DevKit renderer.
+ */
+class local_devkit_renderer extends plugin_renderer_base {
+    /**
+     * Render a table from an array of key value pairs.
+     *
+     * @param string[] $head
+     * @param mixed[] $pairs
+     *
+     * @return string
+     */
+    public function render_key_value_pair_table($head, $pairs) {
+        $table = new html_table();
+        $table->head = $head;
+        foreach ($pairs as $key => $value) {
+            $table->data[] = array(
+                html_writer::tag('code', $key),
+                $value,
+            );
+        }
+        return html_writer::table($table);
+    }
+}

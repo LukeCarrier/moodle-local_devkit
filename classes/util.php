@@ -26,20 +26,18 @@
  * @license GPL v3
  */
 
-// Module metadata
-$string['pluginname'] = 'DevKit';
+namespace local_devkit;
 
-// Exceptions
-$string['error:plugindoesnotexist']        = 'No plugin matching the string \'{$a}\' could be found';
-$string['error:pluginuninstallnotallowed'] = 'The plugin manager reported that it could not uninstall \'{$a}\'';
+defined('MOODLE_INTERNAL') || die;
 
-// String manager
-$string['strings:code']         = 'Code';
-$string['strings:country']      = 'Country';
-$string['strings:countries']    = 'Countries';
-$string['strings:currency']     = 'Currency';
-$string['strings:currencies']   = 'Currencies';
-$string['strings:language']     = 'Language';
-$string['strings:languages']    = 'Languages';
-$string['strings:translation']  = 'Translation';
-$string['strings:translations'] = 'Translations';
+/**
+ * Utility methods and values.
+ */
+class util {
+    /**
+     * Moodle component name.
+     *
+     * @var string
+     */
+    const MOODLE_COMPONENT = 'local_devkit';
+}
