@@ -31,7 +31,7 @@ require_once dirname(dirname(__DIR__)) . '/config.php';
 use local_devkit\util;
 
 $PAGE->set_context(context_system::instance());
-$PAGE->set_url(new moodle_url('/local/devkit/strings.php'));
+$PAGE->set_url(new moodle_url('/local/devkit/date.php'));
 
 $stringmgr = get_string_manager();
 /** @var local_devkit_renderer $renderer */
@@ -39,24 +39,9 @@ $renderer = $PAGE->get_renderer(util::MOODLE_COMPONENT);
 
 echo
     $OUTPUT->header(),
-    $OUTPUT->heading(get_string('strings:countries', util::MOODLE_COMPONENT)),
+    $OUTPUT->heading(get_string('date:timezones', util::MOODLE_COMPONENT)),
     $renderer->render_key_value_pair_table(array(
         get_string('www:code', util::MOODLE_COMPONENT),
-        get_string('strings:country', util::MOODLE_COMPONENT),
-    ), $stringmgr->get_list_of_countries(true)),
-    $OUTPUT->heading(get_string('strings:currencies', util::MOODLE_COMPONENT)),
-    $renderer->render_key_value_pair_table(array(
-        get_string('www:code', util::MOODLE_COMPONENT),
-        get_string('strings:currency', util::MOODLE_COMPONENT),
-    ), $stringmgr->get_list_of_countries(true)),
-    $OUTPUT->heading(get_string('strings:languages', util::MOODLE_COMPONENT)),
-    $renderer->render_key_value_pair_table(array(
-        get_string('www:code', util::MOODLE_COMPONENT),
-        get_string('strings:language', util::MOODLE_COMPONENT),
-    ), $stringmgr->get_list_of_languages()),
-    $OUTPUT->heading(get_string('strings:translations', util::MOODLE_COMPONENT)),
-    $renderer->render_key_value_pair_table(array(
-        get_string('www:code', util::MOODLE_COMPONENT),
-        get_string('strings:translation', util::MOODLE_COMPONENT),
-    ), $stringmgr->get_list_of_translations(true)),
+        get_string('date:timezone', util::MOODLE_COMPONENT),
+    ), core_date::get_list_of_timezones()),
     $OUTPUT->footer();

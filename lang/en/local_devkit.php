@@ -34,7 +34,9 @@ $string['error:plugindoesnotexist']        = 'No plugin matching the string \'{$
 $string['error:pluginuninstallnotallowed'] = 'The plugin manager reported that it could not uninstall \'{$a}\'';
 
 // String manager
-$string['strings:code']         = 'Code';
+$string['www:code']             = 'Code';
+$string['date:timezone']        = 'Timezone';
+$string['date:timezones']       = 'Timezones';
 $string['strings:country']      = 'Country';
 $string['strings:countries']    = 'Countries';
 $string['strings:currency']     = 'Currency';
